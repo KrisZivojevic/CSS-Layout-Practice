@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Travel Article</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      ul, li {
+        list-style: none;
+      }
+      ul > li {
+        padding: 6px 12px;
+      }
+      li > a {
+        color: #000;
+      }
+      #locations {
+        display: block; /*prikazi se*/
+      }
+      #views {
+        display: none;
+      }
+      #lakes {
+        display: none;
+      }
+      .wrapper {
+        display: grid;
+        grid-template-columns: 1fr 4fr 1fr;
+        grid-template-areas: 
+        "header header header"
+        "nav main sidebar"
+        "nav main adv"
+        "footer footer footer";
+      }
+      .header {
+        grid-area: header;
+      }
+      .nav {
+        grid-area: nav;
+      }
+      .main {
+        grid-area: main;
+      }
+      .sidebar {
+        grid-area: sidebar;
+      }
+      .adv {
+        grid-area: adv;
+      }
+      .footer {
+        grid-area: footer;
+      }
+      .header-border {
+        border-bottom: 1px solid #00000030;
+      }
+      .nav-border {
+        border-right: 1px solid #00000030;
+      }
+      .sidebar-border {
+        border-left: 1px solid #00000030;
+      }
+      .adv-border {
+        border-left: 1px solid #00000030;
+      }
+      header {
+        padding: 16px;
+        background-color: #fff;
+        font-size: 32px;
+        text-align: center;
+      }
+      footer {
+        padding: 16px;
+      }
+      .grid-travel {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 180px 180px;
+        grid-template-areas: 
+        "img-1 img-2 img-3"
+        "img-1 img-4 img-5";
+        gap: 15px;
+      }
+      .img-1 {
+        grid-area: img-1;
+      }
+      .img-2 {
+        grid-area: img-2;
+      }
+      .img-3 {
+        grid-area: img-3;
+      }
+      .img-4 {
+        grid-area: img-4;
+      }
+      .img-5 {
+        grid-area: img-5;
+      }
+      .grid-location {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 150px);
+        grid-template-areas: 
+        "location-1 location-2 location-3 location-4"
+        "location-5 location-5 location-5 location-6"
+        "location-5 location-5 location-5 location-7";
+        gap: 25px;
+      }
+      .location-1 {
+        grid-area: location-1;
+      }
+      .location-2 {
+        grid-area: location-2;
+      }
+      .location-3 {
+        grid-area: location-3;
+      }
+      .location-4 {
+        grid-area: location-4;
+      }
+      .location-5 {
+        grid-area: location-5;
+      }
+      .location-6 {
+        grid-area: location-6;
+      }
+      .location-7 {
+        grid-area: location-7;
+      }
+      .grid-destination {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(4, 180px);
+          grid-template-areas: 
+          "destination-1 destination-2 destination-3 destination-4"
+          "destination-5 destination-6 destination-6 destination-7"
+          "destination-8 destination-6 destination-6 destination-9"
+          "destination-10 destination-11 destination-12 destination-13";
+          gap: 15px;
+        }
+      .destination-1 {
+        grid-area: destination-1;
+      }
+      .destination-2 {
+        grid-area: destination-2;
+      }
+      .destination-3 {
+        grid-area: destination-3;
+      }
+      .destination-4 {
+        grid-area: destination-4;
+      }
+      .destination-5 {
+        grid-area: destination-5;
+      }
+      .destination-6 {
+        grid-area: destination-6;
+      }
+      .destination-7 {
+        grid-area: destination-7;
+      }
+      .destination-8 {
+        grid-area: destination-8;
+      }
+      .destination-9 {
+        grid-area: destination-9;
+      }
+      .destination-10 {
+        grid-area: destination-10;
+      }
+      .destination-11 {
+        grid-area: destination-11;
+      }
+      .destination-12 {
+        grid-area: destination-12;
+      }
+      .destination-13 {
+        grid-area: destination-13;
+      }
+      main {
+        min-height: 540px /*will be removed*/;
+        padding: 0px 18px;
+      }
+      .t-center {
+        text-align: center;
+      }
+      article > h1 {
+        padding: 32px 0px;
+        font-size: 32px;
+      }
+      article > section > h2 {
+        padding: 16px 0px;
+        font-size: 28px;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 450px;
+        column-gap: 15px;
+      }
+      .right-container {
+        height: 100%;
+        display: grid;
+        align-items: center;
+      }
+      .right-container > div {
+        padding: 16px;
+      }
+      .welcome {
+        padding: 24px 0px;
+        font-size: 26px;
+        text-align: center;
+      }
+      .welcome-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 6%;
+      }
+      .text-justify {
+        text-align: justify;
+      }
+      /*Mobile*/
+      @media only screen and (max-width: 767px) {
+        .wrapper {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-areas:
+          "header"
+          "nav"
+          "main"
+          "sidebar"
+          "adv"
+          "footer";
+        }
+        .grid-travel {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: 150px 150px 150px 150px 150px; /*za svaku sliku posebno mora da se definise ili repeat(5, 150px)*/
+          grid-template-areas: 
+          "img-1"
+          "img-2"
+          "img-3"
+          "img-4"
+          "img-5";
+        }
+        .grid-location {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 150px 150px;
+          grid-template-areas: 
+          "location-1 location-1"
+          "location-1 location-1"
+          "location-2 location-3"
+          "location-4 location-5"
+          "location-6 location-7";
+        }
+        .grid-destination {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(13, 200px);
+          grid-template-areas: 
+          "destination-1"
+          "destination-2"
+          "destination-3"
+          "destination-4"
+          "destination-5"
+          "destination-6"
+          "destination-7"
+          "destination-8"
+          "destination-9"
+          "destination-10"
+          "destination-11"
+          "destination-12"
+          "destination-13";
+          max-width: 450px;
+          margin: 0 auto;
+        }
+        .grid-container {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: 320px;
+        }
+        article > h1 {
+          text-align: center;
+        }
+        .sidebar-border, .adv-border, .nav-border {
+          border: none;
+        }
+      }
+      /*Tablet*/
+      @media only screen and (min-width: 768px) and (max-width: 1023px) {
+        .wrapper {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          grid-template-areas: 
+          "header header"
+          "nav nav"
+          "sidebar main"
+          "adv footer";
+        }
+        .grid-travel {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 150px 150px;
+          grid-template-areas: 
+          "img-1 img-1"
+          "img-1 img-1"
+          "img-2 img-3"
+          "img-4 img-5";
+        }
+        .grid-location {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-areas: 
+          "location-1 location-2 location-3"
+          "location-4 location-4 location-4"
+          "location-4 location-4 location-4"
+          "location-5 location-6 location-7";
+        }
+        .grid-destination {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(6, 150px);
+          grid-template-areas: 
+          "destination-1 destination-2 destination-3"
+          "destination-4 destination-5 destination-7"
+          "destination-6 destination-6 destination-6"
+          "destination-6 destination-6 destination-6"
+          "destination-8 destination-9 destination-10"
+          "destination-11 destination-12 destination-13";
+          gap: 15px;
+        }
+        .nav-border {
+          border-bottom: 1px solid #00000030;
+          border-right: none;
+        }
+        .sidebar-border, .adv-border {
+          border-right: 1px solid #00000030;
+          border-left: none;
+        }
+
+      }
+      .nav-link {
+        color: blue;
+        text-decoration: none;
+      }
+      .nav-link.active {
+        text-decoration: underline;
+      }
+    </style>
+    <script>
+      function onNavChange(articleId) {
+        console.log(document.getElementById("locations"));
+        if (articleId == 'locations') {
+          document.getElementById("locations").style.display = "block";
+          document.getElementById("views").style.display = "none";
+          document.getElementById("lakes").style.display = "none";
+
+          document.getElementById("nav-locations").classList.add('active');
+          document.getElementById("nav-views").classList.remove('active');
+          document.getElementById("nav-lakes").classList.remove('active');
+          
+        } else if (articleId == 'views') {
+          document.getElementById("locations").style.display = "none";
+          document.getElementById("views").style.display = "block";
+          document.getElementById("lakes").style.display = "none";
+          
+          document.getElementById("nav-locations").classList.remove('active');
+          document.getElementById("nav-views").classList.add('active');
+          document.getElementById("nav-lakes").classList.remove('active');
+          
+        } else if (articleId == 'lakes') {
+          document.getElementById("locations").style.display = "none";
+          document.getElementById("views").style.display = "none";
+          document.getElementById("lakes").style.display = "block";
+          
+          document.getElementById("nav-locations").classList.remove('active');
+          document.getElementById("nav-views").classList.remove('active');
+          document.getElementById("nav-lakes").classList.add('active');
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header header-border">TRAVEL WITH ME</header>
+      <nav class="nav nav-border">
+        <ul>
+          <li><a href="#" class="nav-link active" id="nav-locations" onclick="onNavChange('locations')">Best Locations</a></li>
+          <li><a href="#" class="nav-link" id="nav-views" onclick="onNavChange('views')">Amazing Views</a></li>
+          <li><a href="#" class="nav-link" id="nav-lakes" onclick="onNavChange('lakes')">Lakes</a></li>
+        </ul>
+      </nav>
+      <main class="main">
+        <article id="locations">
+          <h1>Lorem Ipsum</h1>
+          <div class="grid-container">
+            <div class="left-container">
+              <img src="travel-1.jpg" alt="travel" class="welcome-img"/>
+            </div>
+            <div class="right-container">
+              <div>
+                <h2 class="welcome">Welcome</h2>
+                <p class="text-justify">Lorem ipsum sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+              </div>
+            </div>
+          </div>
+          <section>
+            <h2>Place to Visit this Summer</h2>
+            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <div class="grid-travel">
+              <img class="img-1" src="travel-2.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="img-2" src="travel-3.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="img-3" src="travel-4.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="img-4" src="travel-5.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="img-5" src="travel-6.jpg" alt="travel image" width="100%" height="100%"/>
+            </div>
+          </section>
+          <section>
+            <h2>Best Locations</h2>
+            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+            <div class="grid-location">
+              <img class="location-1" src="travel-1.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="location-2" src="travel-2.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="location-3" src="travel-3.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="location-4" src="travel-4.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="location-5" src="travel-5.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="location-6" src="travel-6.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="location-7" src="travel-7.jpg" alt="travel image" width="100%" height="100%"/>
+            </div>
+          </section>
+          <section>
+            <h2>Popular Destinations</h2>
+            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+            <div class="grid-destination">
+              <img class="destination-1" src="travel-1.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-2" src="travel-2.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-3" src="travel-3.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-4" src="travel-4.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-5" src="travel-5.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-6" src="travel-6.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-7" src="travel-7.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-8" src="travel-8.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-9" src="travel-9.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-10" src="travel-10.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-11" src="travel-11.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-12" src="travel-12.jpg" alt="travel image" width="100%" height="100%"/>
+              <img class="destination-13" src="travel-13.jpg" alt="travel image" width="100%" height="100%"/>
+            </div>
+          </section>
+        </article>
+        <article id="views">
+          <h1>Amazing Views - Places you should visit</h1>
+        </article>
+        <article id="lakes">
+          <h1>Top 10 Lakes in Europe</h1>
+        </article>
+      </main>
+      <sidebar class="sidebar sidebar-border">
+        Sidebar goes here
+      </sidebar>
+      <div class="adv adv-border">
+        Adv goes here...
+      </div>
+      <footer class="footer">
+        <div class="t-center">
+          <p>&copy; 2022 Copyrights | All Rights Reserved</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
